@@ -1,9 +1,14 @@
 import pygame
+import Camera
 
 pygame.init()
 
 display_width = 800
 display_height = 600
+
+entities = []
+camera = Camera(*blah*, display_width, display_height)
+
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -13,6 +18,7 @@ pygame.display.set_caption('Flappy Bird')
 clock = pygame.time.Clock()
 
 box_image = pygame.image.load('BlackBox.jpg')
+entities.append(box_image)
 
 def box(x, y):
     game_display.blit(box_image, (x, y))
@@ -27,8 +33,14 @@ while not crashed:
         if event.type == pygame.QUIT:
             crashed = True
 
-    game_display.fill(white)
-    box(x, y)
+        # If space down, make the box jump
+        if event.type == pygame.KEYDOWN:
+            if event.type == pygame.K_SPACE:
+                box_image.jump()
+
+    for e in entities:
+        game_display.blit(e.image, camera.apply(e))
+
     pygame.display.update()
     clock.tick(30)
 
