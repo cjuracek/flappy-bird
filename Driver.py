@@ -1,48 +1,47 @@
 import pygame
 import Camera
+import GameConstants
+import BoxClass
+# import Box
 
 pygame.init()
 
-display_width = 800
-display_height = 600
-
 entities = []
-camera = Camera(*blah*, display_width, display_height)
+#camera = Camera(*blah*, display_width, display_height)
 
-
-black = (0, 0, 0)
-white = (255, 255, 255)
-
-game_display = pygame.display.set_mode((display_width, display_height))
+game_display = pygame.display.set_mode((GameConstants.DISPLAY_WIDTH, GameConstants.DISPLAY_HEIGHT))
 pygame.display.set_caption('Flappy Bird')
 clock = pygame.time.Clock()
 
-box_image = pygame.image.load('BlackBox.jpg')
-entities.append(box_image)
+# box_image = pygame.image.load('BlackBox.jpg')
+box = BoxClass.Box(GameConstants.DISPLAY_WIDTH * 0.25, GameConstants.DISPLAY_HEIGHT * 0.25)
+#entities.append(box_image)
 
-def box(x, y):
-    game_display.blit(box_image, (x, y))
-
-x = display_width * 0.01
-y = display_height * 0.25
+# game_display.blit(box.rect, (box.x_pos, box.y_pos))
+# box.draw(game_display)
+# pygame.display.update()
 
 crashed = False
 while not crashed:
 
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            crashed = True
 
         # If space down, make the box jump
-        if event.type == pygame.KEYDOWN:
-            if event.type == pygame.K_SPACE:
-                box_image.jump()
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            print('SPACE WAS PRESSED')
+            box.jump()
 
-    for e in entities:
-        game_display.blit(e.image, camera.apply(e))
+    game_display.fill(GameConstants.WHITE)
+    box.update_position(game_display)
+    game_display.blit(box.box_image, (box.x_pos, box.y_pos))
 
+    #for e in entities:
+        #game_display.blit(e.image, camera.apply(e))
+
+    box.increment_time()
+    # game_display.blit(box.rect, (box.x_pos, box.curr_y_pos))
     pygame.display.update()
-    clock.tick(30)
+    clock.tick(GameConstants.FRAMES_PER_SECOND)
 
 pygame.quit()
 quit()
