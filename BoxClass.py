@@ -11,7 +11,7 @@ class Box(object):
 
         # Jump options
         self.time_since_last_jump = 0.0
-        self.jump_velocity = -350
+        self.jump_velocity = -500
         self.jump_start_y_pos = self.y_pos
 
         # Collision/movement via this rectangle
