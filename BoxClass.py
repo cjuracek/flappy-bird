@@ -40,3 +40,4 @@ class Box(object):
                      + self.jump_start_y_pos
 
         surface.blit(self.box_image, (self.x_pos, self.y_pos))
+        self.rect.x, self.rect.y = self.x_pos, self.y_pos

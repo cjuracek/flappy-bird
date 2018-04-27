@@ -12,7 +12,7 @@ game_display = pygame.display.set_mode((GameConstants.DISPLAY_WIDTH, GameConstan
 pygame.display.set_caption('Flappy Bird')
 clock = pygame.time.Clock()
 
-box = BoxClass.Box(GameConstants.DISPLAY_WIDTH * 0.25, GameConstants.DISPLAY_HEIGHT * 0.25)
+flappy_box = BoxClass.Box(GameConstants.DISPLAY_WIDTH * 0.25, GameConstants.DISPLAY_HEIGHT * 0.25)
 #entities.append(box_image)
 
 crashed = False
@@ -22,12 +22,21 @@ while not crashed:
 
         # If space down, make the box jump
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            box.jump()
+            flappy_box.jump()
 
     game_display.fill(GameConstants.WHITE)
-    box.update_position(game_display)
+    floor = pygame.draw.rect(game_display, GameConstants.BLACK, pygame.Rect((0, GameConstants.DISPLAY_HEIGHT * 0.92),
+                                                                            (GameConstants.DISPLAY_WIDTH, 50)))
+    # Update flappy box
+    flappy_box.update_position(game_display)
+    flappy_box.increment_time()
 
-    box.increment_time()
+    # Check for collision with floor
+    # TODO: Print game over screen
+    if flappy_box.rect.colliderect(floor):
+        pygame.quit()
+
+    # Update graphics + advance 1 frame
     pygame.display.update()
     clock.tick(GameConstants.FRAMES_PER_SECOND)
 
