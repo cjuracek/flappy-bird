@@ -1,61 +1,72 @@
+import random
 import pygame
-import Camera
 import GameConstants
 import BoxClass
 
-pygame.init()
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
 
-entities = []
-#camera = Camera(*blah*, display_width, display_height)
+pygame.init()
 
 game_display = pygame.display.set_mode((GameConstants.DISPLAY_WIDTH, GameConstants.DISPLAY_HEIGHT))
 pygame.display.set_caption('Flappy Bird')
 clock = pygame.time.Clock()
 
 flappy_box = BoxClass.Box(GameConstants.DISPLAY_WIDTH * 0.25, GameConstants.DISPLAY_HEIGHT * 0.25)
-#entities.append(box_image)
 
-wall_x_pos = GameConstants.DISPLAY_WIDTH
 delta_x = -15
+wall_x_positions = [x for x in range(GameConstants.DISPLAY_WIDTH, 0, delta_x)]
+current_wall_position = 0
+top_wall_lengths = [x for x in range(50, 260, 30)]
+bottom_wall_lengths = [x for x in range(260, 50, -30)]
+index = random.randint(0, len(top_wall_lengths) - 1)
+top_wall_length, bottom_wall_length = top_wall_lengths[index], bottom_wall_lengths[index]
 
-crashed = False
-while not crashed:
-
+score = 0
+while True:
     for event in pygame.event.get():
-
         # If space down, make the box jump
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             flappy_box.jump()
 
-    game_display.fill(GameConstants.WHITE)
+    game_display.fill(WHITE)
 
     # Draw the floor
-    floor = pygame.draw.rect(game_display, GameConstants.BLACK, pygame.Rect((0, GameConstants.DISPLAY_HEIGHT * 0.92),
-                                                                            (GameConstants.DISPLAY_WIDTH, 50)))
+    floor = pygame.draw.rect(game_display, BLACK, pygame.Rect((0, GameConstants.DISPLAY_HEIGHT * 0.92),
+                                                              (GameConstants.DISPLAY_WIDTH, 50)))
 
     # Draw the walls
-    top_wall = pygame.draw.rect(game_display, GameConstants.BLACK, pygame.Rect((wall_x_pos, 0), (10, 150)))
-    bottom_wall = pygame.draw.rect(game_display, GameConstants.BLACK, pygame.Rect((wall_x_pos, 400), (10, 150)))
+    top_wall = pygame.Rect((wall_x_positions[current_wall_position], 0), (20, top_wall_length))
+    top_wall = pygame.draw.rect(game_display, BLACK, top_wall)
+
+    bottom_wall_start = GameConstants.DISPLAY_HEIGHT - floor.height - bottom_wall_length  # Top of bottom wall
+    bottom_wall = pygame.Rect((wall_x_positions[current_wall_position], bottom_wall_start), (20, bottom_wall_length))
+    bottom_wall = pygame.draw.rect(game_display, BLACK, bottom_wall)
 
     # Update flappy box
     flappy_box.update_position(game_display)
     flappy_box.increment_time()
 
-    # Check for collision with floor
-    # TODO: Print game over screen
+    # Check for collision with floor + walls
     if flappy_box.rect.colliderect(floor):
         pygame.quit()
+        print('SCORE: ', score)
     elif flappy_box.rect.colliderect(top_wall) or flappy_box.rect.colliderect(bottom_wall):
         pygame.quit()
+        print('SCORE: ', score)
 
-    wall_x_pos = (wall_x_pos + delta_x) % GameConstants.DISPLAY_WIDTH
+    # If walls at end of screen, create new walls
+    current_wall_position += 1
+    if current_wall_position > len(wall_x_positions) - 1:
+        index = random.randint(0, len(top_wall_lengths) - 1)
+        top_wall_length, bottom_wall_length = top_wall_lengths[index], bottom_wall_lengths[index]
+
+    current_wall_position = current_wall_position % len(wall_x_positions)
 
     # Update graphics + advance 1 frame
     pygame.display.update()
     clock.tick(GameConstants.FRAMES_PER_SECOND)
-
-    # for e in entities:
-        # game_display.blit(e.image, camera.apply(e))
+    score += 1
 
 pygame.quit()
 quit()
