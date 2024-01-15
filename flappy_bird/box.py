@@ -1,4 +1,4 @@
-import GameConstants
+from flappy_bird import game_constants
 import pygame
 
 
@@ -17,7 +17,7 @@ class Box(object):
         self.rect = pygame.Rect(50, 50, 50, 50)
 
     def draw(self, surface):
-        pygame.draw.rect(surface, GameConstants.BLACK, self.rect)
+        pygame.draw.rect(surface, game_constants.BLACK, self.rect)
 
     # Update y position according to 1/2gt^2 + vt + y
     def jump(self):
@@ -25,7 +25,7 @@ class Box(object):
         self.jump_start_y_pos = self.y_pos
 
         self.y_pos = (
-            (-0.5 * GameConstants.GRAVITY * self.time_since_last_jump**2)
+            (-0.5 * game_constants.GRAVITY * self.time_since_last_jump**2)
             + (self.jump_velocity * self.time_since_last_jump)
             + self.jump_start_y_pos
         )
@@ -33,11 +33,11 @@ class Box(object):
         # self.rect.move_ip(self.x_pos, self.y_pos)
 
     def increment_time(self):
-        self.time_since_last_jump += 1 / GameConstants.FRAMES_PER_SECOND
+        self.time_since_last_jump += 1 / game_constants.FRAMES_PER_SECOND
 
     def update_position(self, surface):
         self.y_pos = (
-            (-0.5 * GameConstants.GRAVITY * self.time_since_last_jump**2)
+            (-0.5 * game_constants.GRAVITY * self.time_since_last_jump**2)
             + (self.jump_velocity * self.time_since_last_jump)
             + self.jump_start_y_pos
         )
