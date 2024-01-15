@@ -1,7 +1,7 @@
 import random
 import pygame
-import GameConstants
-import BoxClass
+
+from flappy_bird import box, game_constants
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -9,17 +9,17 @@ WHITE = (255, 255, 255)
 pygame.init()
 
 game_display = pygame.display.set_mode(
-    (GameConstants.DISPLAY_WIDTH, GameConstants.DISPLAY_HEIGHT)
+    (game_constants.DISPLAY_WIDTH, game_constants.DISPLAY_HEIGHT)
 )
 pygame.display.set_caption("Flappy Bird")
 clock = pygame.time.Clock()
 
-flappy_box = BoxClass.Box(
-    GameConstants.DISPLAY_WIDTH * 0.25, GameConstants.DISPLAY_HEIGHT * 0.25
+flappy_box = box.Box(
+    game_constants.DISPLAY_WIDTH * 0.25, game_constants.DISPLAY_HEIGHT * 0.25
 )
 
 delta_x = -15
-wall_x_positions = [x for x in range(GameConstants.DISPLAY_WIDTH, 0, delta_x)]
+wall_x_positions = [x for x in range(game_constants.DISPLAY_WIDTH, 0, delta_x)]
 current_wall_position = 0
 top_wall_lengths = [x for x in range(50, 260, 30)]
 bottom_wall_lengths = [x for x in range(260, 50, -30)]
@@ -43,7 +43,8 @@ while True:
         game_display,
         BLACK,
         pygame.Rect(
-            (0, GameConstants.DISPLAY_HEIGHT * 0.92), (GameConstants.DISPLAY_WIDTH, 50)
+            (0, game_constants.DISPLAY_HEIGHT * 0.92),
+            (game_constants.DISPLAY_WIDTH, 50),
         ),
     )
 
@@ -54,7 +55,7 @@ while True:
     top_wall = pygame.draw.rect(game_display, BLACK, top_wall)
 
     bottom_wall_start = (
-        GameConstants.DISPLAY_HEIGHT - floor.height - bottom_wall_length
+        game_constants.DISPLAY_HEIGHT - floor.height - bottom_wall_length
     )  # Top of bottom wall
     bottom_wall = pygame.Rect(
         (wall_x_positions[current_wall_position], bottom_wall_start),
@@ -89,7 +90,7 @@ while True:
 
     # Update graphics + advance 1 frame
     pygame.display.update()
-    clock.tick(GameConstants.FRAMES_PER_SECOND)
+    clock.tick(game_constants.FRAMES_PER_SECOND)
     score += 1
 
 pygame.quit()
