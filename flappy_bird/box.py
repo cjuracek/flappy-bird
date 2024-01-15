@@ -1,5 +1,6 @@
-from flappy_bird import game_constants
 import pygame
+
+from flappy_bird import game_constants
 
 
 class Box(object):
