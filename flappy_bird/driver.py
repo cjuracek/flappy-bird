@@ -1,4 +1,5 @@
 import random
+
 import pygame
 
 from flappy_bird import box, game_constants
