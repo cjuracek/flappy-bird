@@ -1,11 +1,17 @@
+from importlib import resources as impresources
+
 import pygame
 
 from flappy_bird import game_constants
 
+from . import images
+
 
 class Box(object):
     def __init__(self, x, y):
-        self.box_image = pygame.image.load("BlackBox.jpg")
+        box_file = impresources.files(images) / "black_box.jpg"
+        with box_file.open("rt") as f:
+            self.box_image = pygame.image.load(f)
         self.box_image = pygame.transform.scale(self.box_image, (50, 50))
         self.x_pos, self.y_pos = x, y
 
