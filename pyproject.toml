@@ -8,6 +8,8 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 pygame = "^2.5.2"
+jupyterlab = "^4.0.10"
+matplotlib = "^3.8.2"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.13.2"
