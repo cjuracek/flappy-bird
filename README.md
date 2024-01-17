@@ -1,5 +1,12 @@
-# flappy-bird
-Pygame Flappy-Bird game with reinforcement learning
+# About
+
+[flappy_bird_gif.mp4](flappy_bird_gif.mp4)
+
+Final project for CSU's CS 445 "Introduction to Machine Learning", led by Chuck Anderson.
+The goal of the project is to apply reinforcement learning to a Flappy Bird-like game
+created with Pygame.
+
+Full writeup with corresponding notebook can be found under the `writeup/` directory.
 
 # Installation
 
