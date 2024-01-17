@@ -1,6 +1,10 @@
 # About
 
-[flappy_bird_gif.mp4](flappy_bird_gif.mp4)
+
+
+https://github.com/cjuracek/flappy-bird/assets/25205565/c622adca-29da-4244-b7f6-3a40c488bea5
+
+
 
 Final project for CSU's CS 445 "Introduction to Machine Learning", led by Chuck Anderson.
 The goal of the project is to apply reinforcement learning to a Flappy Bird-like game
